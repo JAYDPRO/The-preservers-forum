@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Email Sign In</title>
+	 <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+}
+
+.overlay {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.container {
+  width: 300px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+
+.cta-button {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.cta-button:hover {
+  background-color: #0056b3;
+}
+
+.cta-link {
+  color: #007bff;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.cta-link:hover {
+  text-decoration: underline;
+}
+
+#error-message {
+  color: red;
+  text-align: center;
+  margin-top: 10px;
+}
+ <div class="overlay">
+  <div class="container">
+    <h1>Sign In</h1>
+    <form id="signin-form">
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required>
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required>
+      <button type="submit" class="cta-button" onclick="openWebsite()">Sign In</button>
+    </form>
+    <div id="error-message"></div>
+    <p>Don't have an account? <a href="#" id="signup-link" class="cta-link">Sign up here</a></p>
+  </div>
+</div>
+<script src="script.js"></script>
+</body>
+function openWebsite() {
+  // Open the website in a new tab/window
+  window.open('https://example.com', '_blank');
+}
+
+document.getElementById('signup-link').addEventListener('click', function(event) {
+  event.preventDefault();
+  // Open the website in the browser
+  window.open('https://thepreservers.com', '_system');
+});
+</html>
