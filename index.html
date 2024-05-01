@@ -1,110 +1,226 @@
+DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QUIZ QUEST The Ultimate Of challenge</title>
+</head>
+</body>
+
+    <div class="content">
+        <h1>QUIZ QUEST!!!</h1>
+        <p>"The Ultimate Challenge" </p>
+        <style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #0F52BA;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        max-width: 800px;
+        margin: 90px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .question {
+        font-size: 30px;
+        margin-bottom: 150px;
+    }
+
+    .options {
+        display: flex;
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+    }
+
+    .option {
+        flex: 0 0 45%;
+        margin: 5px;
+        padding: 10px;
+        background-color: #00ff00;
+        border: 2px solid #ffffff;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: background-color 0.3s, border-color 0.3s;
+    }
+
+    .option:hover {
+        background-color: O0ff00;
+    }
+
+    .option.correct {
+        border-color:green;
+    }
+    
+    .option.correct {
+        background color:006400;
+    }
+
+    .option.wrong {
+        background-color:red;
+
+    }
+
+    .timer {
+        font-size: 30px;
+        text-align: center;
+        margin-bottom: 50px;
+    }
+
+    .message {
+        font-size: 18px;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .button {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        text-align: center;
+        background-color: #006400;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .button:hover {
+        background-color: #006400;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="question"></div>
+    <div class="options"></div>
+    <div class="timer">Time left: <span id="timer">45</span> seconds</div>
+    <div class="message"></div>
+    <button class="button" id="nextButton" style="display: none;">Next</button>
+    <button class="button" id="fiftyFiftyButton" style="display: block; margin-top: 10px;">50/50</button>
+</div>
+
+<script>
+    const questions = [
+        {
+            question: "Question 1?",
+            options: ["Option 1", "Option 2", "Option 3", "Option 4"],
+            answer: 0 // Index of the correct answer in the options array
+        },
+        // Add more questions here
+    ];
+
+    let currentQuestion = 0;
+    let timer = 45;
+    let timerInterval;
+
+    const questionElement = document.querySelector('.question');
+    const optionsElement = document.querySelector('.options');
+    const timerElement = document.querySelector('#timer');
+    const messageElement = document.querySelector('.message');
+    const nextButton = document.querySelector('#nextButton');
+    const fiftyFiftyButton = document.querySelector('#fiftyFiftyButton');
+
+    function displayQuestion() {
+        const question = questions[currentQuestion];
+        questionElement.textContent = question.question;
+        optionsElement.innerHTML = '';
+        question.options.forEach((option, index) => {
+            const optionElement = document.createElement('div');
+            optionElement.classList.add('option');
+            optionElement.textContent = option;
+            optionElement.addEventListener('click', () => checkAnswer(index));
+            optionsElement.appendChild(optionElement);
+        });
+    }
+
+    function checkAnswer(index) {
+        clearInterval(timerInterval);
+        const options = optionsElement.children;
+        Array.from(options).forEach(option => option.classList.remove('correct', 'wrong'));
+        if (index === questions[currentQuestion].answer) {
+            options[index].classList.add('correct');
+            messageElement.textContent = 'Correct!';
+        } else {
+            options[index].classList.add('wrong');
+            messageElement.textContent = 'Wrong!';
+        }
+        nextButton.style.display = 'block';
+    }
+
+    function fiftyFifty() {
+        const options = optionsElement.children;
+        const correctIndex = questions[currentQuestion].answer;
+        let removed = 0;
+        for (let i = 0; i < options.length; i++) {
+            if (i !== correctIndex && removed < 2) {
+                options[i].style.display = 'none';
+                removed++;
+            }
+        }
+        fiftyFiftyButton.style.display = 'none';
+    }
+
+    function nextQuestion() {
+        currentQuestion++;
+        if (currentQuestion < questions.length) {
+            displayQuestion();
+            timer = 45;
+            startTimer();
+            messageElement.textContent = '';
+            nextButton.style.display = 'none';
+            fiftyFiftyButton.style.display = 'block';
+            const options = optionsElement.children;
+            Array.from(options).forEach(option => option.style.display = 'block');
+        } else {
+            // Quiz completed
+            questionElement.textContent = 'Quiz completed!';
+            optionsElement.innerHTML = '';
+            timerElement.textContent = '';
+            messageElement.textContent = '';
+            nextButton.style.display = 'none';
+            fiftyFiftyButton.style.display = 'none';
+        }
+    }
+
+    function startTimer() {
+        timerInterval = setInterval(() => {
+            timer--;
+            timerElement.textContent = timer;
+            if (timer === 0) {
+                clearInterval(timerInterval);
+                checkAnswer(-1); // Timeout, no option selected
+                nextButton.style.display = 'block';
+            }
+        }, 1000);
+    }
+
+    displayQuestion();
+    startTimer();
+
+    nextButton.addEventListener('click', nextQuestion);
+    fiftyFiftyButton.addEventListener('click', fiftyFifty);
+</script>
+</body>
+</html>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Email Sign In</title>
-	 <link rel="stylesheet" href="style.css">
-    <title>Document</title>
+    <title>Project Viewer</title>
 </head>
 <body>
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
-}
-
-.overlay {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.container {
-  width: 300px;
-}
-
-h1 {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-label {
-  display: block;
-  margin-bottom: 5px;
-}
-
-input {
-  width: 100%;
-  padding: 8px;
-  margin-bottom: 10px;
-  box-sizing: border-box;
-}
-
-.cta-button {
-  width: 100%;
-  padding: 10px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.cta-button:hover {
-  background-color: #0056b3;
-}
-
-.cta-link {
-  color: #007bff;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.cta-link:hover {
-  text-decoration: underline;
-}
-
-#error-message {
-  color: red;
-  text-align: center;
-  margin-top: 10px;
-}
- <div class="overlay">
-  <div class="container">
-    <h1>Sign In</h1>
-    <form id="signin-form">
-      <label for="email">Email:</label>
-      <input type="email" id="email" name="email" required>
-      <label for="password">Password:</label>
-      <input type="password" id="password" name="password" required>
-      <button type="submit" class="cta-button" onclick="openWebsite()">Sign In</button>
-    </form>
-    <div id="error-message"></div>
-    <p>Don't have an account? <a href="#" id="signup-link" class="cta-link">Sign up here</a></p>
-  </div>
-</div>
-<script src="script.js"></script>
+    <h1>Project Viewer</h1>
+    <p>Click the link below to view the project:</p>
+    <a href="https://your-project-url.com" target="_blank">View Project</a>
 </body>
-function openWebsite() {
-  // Open the website in a new tab/window
-  window.open('https://example.com', '_blank');
-}
-
-document.getElementById('signup-link').addEventListener('click', function(event) {
-  event.preventDefault();
-  // Open the website in the browser
-  window.open('https://thepreservers.com', '_system');
-});
 </html>
+
+
